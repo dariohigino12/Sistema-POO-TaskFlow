@@ -1,8 +1,8 @@
 package com.taskflow.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * Representa uma tarefa com prazo de entrega definido.
@@ -22,7 +22,7 @@ public class TarefaComPrazo {
     private String titulo;
     private String descricao;
     private final LocalDate dataCriacao;
-    private LocalDateTime dataConclusao;
+    private LocalDate dataConclusao;
     private StatusTarefa status;
     private Prioridade prioridade;
     private LocalDate dataLimite;
@@ -67,7 +67,7 @@ public class TarefaComPrazo {
         return dataCriacao;
     }
 
-    public LocalDateTime getDataConclusao() {
+    public LocalDate getDataConclusao() {
         return dataConclusao;
     }
 
@@ -104,7 +104,7 @@ public class TarefaComPrazo {
 
     public void concluir() {
         this.status = StatusTarefa.CONCLUIDA;
-        this.dataConclusao = LocalDateTime.now();
+        this.dataConclusao = LocalDate.now();
     }
 
     public void reabrir() {
@@ -142,8 +142,20 @@ public class TarefaComPrazo {
         sb.append("\n      Criada em: ").append(dataCriacao.format(FORMATADOR));
         sb.append(" | Prazo: ").append(dataLimite != null ? dataLimite.format(FORMATADOR) : "(sem prazo)");
         if (dataConclusao != null) {
-            sb.append(" | Concluída em: ").append(dataConclusao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+            sb.append(" | Concluída em: ").append(dataConclusao.format(FORMATADOR));
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TarefaComPrazo that)) return false;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

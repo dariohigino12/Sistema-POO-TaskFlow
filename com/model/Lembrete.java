@@ -2,6 +2,7 @@ package com.taskflow.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * Representa um lembrete associado a um usuário no sistema TaskFlow.
@@ -54,5 +55,17 @@ public class Lembrete {
     public String toString() {
         return String.format("#%-3d Lembrete: %s | Em: %s",
                 id, mensagem, dataHora != null ? dataHora.format(FORMATADOR) : "(sem data)");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Lembrete lembrete)) return false;
+        return id == lembrete.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

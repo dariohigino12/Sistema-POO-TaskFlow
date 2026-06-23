@@ -1,6 +1,7 @@
 package com.taskflow.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Classe abstrata que representa uma tarefa genérica no sistema TaskFlow.
@@ -127,5 +128,17 @@ public abstract class Tarefa {
             sb.append(" | Concluída em: ").append(dataConclusao);
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tarefa tarefa)) return false;
+        return id == tarefa.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
